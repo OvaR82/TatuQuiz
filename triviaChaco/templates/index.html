@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %} Trivia {% endblock %}
+
+{% load static %}
+
+{% block body %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="modal-body" id="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" id="start-quiz" class="btn btn-primary">A la Trivia</button>
+      </div>
+      {% else %}
+      <div class="modal-body">
+        <h3>Registrate antes de empezar</h3>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<br><br><br>
+
+<!-- cards -->
+<div class="container">
+  <div class="container mx-auto mt-2">
+    <div class="row">
+
+      {% for i in quiz %}
+      <div class="col-md-4">
+        <div class="card" style="width: 21rem;">
+          <div class="card-body">
+            <h5 class="card-title" style="text-align: center;">{{i.name}}</h5>
+            <br>
+            <p class="card-text">{{i.desc}}</p>
+            <br>
+            <button data-bs-target="#exampleModal" data-bs-toggle="modal" data-time="{{i.time}}"
+              data-questions="{{i.number_of_questions}}" data-name="{{i.name}}" data-id="{{i.id}}" id="btn"
+              style="justify-content: center;" class="attempt btn mr-2 modal-button"><i class="fas fa-link"></i>A Jugar!</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+  const modalBtns = [...document.getElementsByClassName('modal-button')]
+  const modalBody = document.getElementById('modal-body')
+  const modaltitle = document.getElementById('modal-title')
+  const startQuiz = document.getElementById('start-quiz')
+
+  const url = window.location.href
+
+  modalBtns.forEach(modalBtn => modalBtn.addEventListener('click', () => {
+    const id = modalBtn.getAttribute('data-id')
+    const name = modalBtn.getAttribute('data-name')
+    const numeroDePreguntas = modalBtn.getAttribute('data-questions')
+    const time = modalBtn.getAttribute('data-time')
+
+    modaltitle.innerHTML = `${name}`
+
+    modalBody.innerHTML = `
+    La categoría ${name} consta de ${numeroDePreguntas} preguntas y sus ${numeroDePreguntas} respuestas correctas. Tendrás exactamente ${time} segundos para completar las ${numeroDePreguntas} trivias. Una vez que lo hayas completado
+          tienes que ir al boton finalizar y así conocer tus resultados.<br>
+          Buena suerte y a jugar!!!.
+    `
+
+    startQuiz.addEventListener('click', () => {
+      window.location.href = url + id
+    });
+  }));
+</script>
+{% endblock %}
