@@ -7,16 +7,29 @@ from django.contrib.auth.decorators import login_required
 from .forms import QuizForm, QuestionForm
 from django.forms import inlineformset_factory
 
+# Funciones que organizan y conectan las vizualizaciones con los htmls y el archivo urls.py 
+# Conecta a la vista que muestra las trivias solicitando todos los elementos del módulo Quiz
 def index(request):
     quiz = Quiz.objects.all()
     para = {'quiz' : quiz}
     return render(request, "index.html", para)
 
+# Conecta a la vista de inicio
+def Home(request):
+    return render(request, "home.html")
+
+# Conecta a la vista Nosotros
+def Team(request):
+    return render(request, "team.html")
+
+# Solicita el ingreso del usuuario para continuar
 @login_required(login_url = '/login')
+# Conecta a la primera página que muestra la trivia solicitada por el usuario
 def quiz(request, myid):
     quiz = Quiz.objects.get(id=myid)
     return render(request, "quiz.html", {'quiz':quiz})
 
+# Conecta a la vista que muestra las preguntas de la trivia solicitada por el usuario
 def quiz_data_view(request, myid):
     quiz = Quiz.objects.get(id=myid)
     questions = []
@@ -30,7 +43,7 @@ def quiz_data_view(request, myid):
         'time': quiz.time,
     })
 
-
+# Guarda los datos de las elecciones y aciertos realizados por el usuario
 def save_quiz_view(request, myid):
     if request.is_ajax():
         questions = []
@@ -73,7 +86,7 @@ def save_quiz_view(request, myid):
         
         return JsonResponse({'passed': True, 'score': score, 'marks': marks})
     
-
+# Conecta y gestiona la vista de registro
 def Signup(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -91,9 +104,10 @@ def Signup(request):
         return render(request, 'login.html')  
     return render(request, "signup.html")
 
+# Conecta y gestiona la vista de ingreso
 def Login(request):
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect('/index')
     if request.method=="POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -102,16 +116,17 @@ def Login(request):
         
         if user is not None:
             login(request, user)
-            return redirect("/")
+            return redirect("/index")
         else:
             return render(request, "login.html") 
     return render(request, "login.html")
 
+# Conecta y gestiona la desconección del usuario
 def Logout(request):
     logout(request)
     return redirect('/')
 
-
+# Gestiona la sección para agregar los formularios de las trivias y la conección a la base de datos
 def add_quiz(request):
     if request.method=="POST":
         form = QuizForm(data=request.POST)
@@ -124,6 +139,7 @@ def add_quiz(request):
         form=QuizForm()
     return render(request, "add_quiz.html", {'form':form})
 
+# Gestiona la sección para agregar los formularios de las preguntas y la conección a la base de datos
 def add_question(request):
     questions = Question.objects.all()
     questions = Question.objects.filter().order_by('-id')
@@ -136,6 +152,7 @@ def add_question(request):
         form=QuestionForm()
     return render(request, "add_question.html", {'form':form, 'questions':questions})
 
+# Gestiona la sección para eliminar los formularios de las preguntas y la conección a la base de datos
 def delete_question(request, myid):
     question = Question.objects.get(id=myid)
     if request.method == "POST":
@@ -143,7 +160,7 @@ def delete_question(request, myid):
         return redirect('/add_question')
     return render(request, "delete_question.html", {'question':question})
 
-
+# Gestiona la sección para agregar los formularios de las respuestas y la conección a la base de datos
 def add_options(request, myid):
     question = Question.objects.get(id=myid)
     QuestionFormSet = inlineformset_factory(Question, Answer, fields=('content','correct', 'question'), extra=4)
@@ -157,10 +174,17 @@ def add_options(request, myid):
         formset=QuestionFormSet(instance=question)
     return render(request, "add_options.html", {'formset':formset, 'question':question})
 
+# Muestra los resultados que puede ver cualquier usuario
+def results_public(request):
+    marks = Marks_Of_User.objects.all()
+    return render(request, "results_public.html", {'marks':marks})
+
+# Muestra los resultados solo para el administrador
 def results(request):
     marks = Marks_Of_User.objects.all()
     return render(request, "results.html", {'marks':marks})
 
+# Posibilita al administrador eliminar todos los resultados
 def delete_result(request, myid):
     marks = Marks_Of_User.objects.get(id=myid)
     if request.method == "POST":

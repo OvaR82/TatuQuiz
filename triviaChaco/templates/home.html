@@ -1,6 +1,6 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  {% load static %}
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,17 +8,25 @@
     <link rel="shortcut icon" href="{% static 'images/mulita_1.png' %}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet"> 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 
-    <title>TATU Chaco Quiz!</title>
+    <title>Nosotros</title>
 
 </head>
-    <!--Con este código se crea la barra de navegación-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body>
+    <header>
+        <div class="logo">
+            <img src="{% static 'images/Loguito_sin_fondo.png' %}" alt="logotipo">
+        </div>
+    </header>
+
+    <main>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="/"> <img src="{% static 'images/Loguito_sin_fondo.png' %}" width="60" height="60" class="img-responsive"
             class="logo d-inline-flex align-text-center">
@@ -27,8 +35,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!--Código Django para mostrar links dependiendo si el usuario se conecta o no-->  
-            {% if user.is_authenticated %}
+              {% if user.is_authenticated %}
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                   <a class="nav-link" href="#">Bienvenido {{request.user}}</a>
@@ -40,9 +47,9 @@
                   <a class="nav-link" href="/index">Trivias</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/results_public">Estadísticas</a>
+                  <a class="nav-link" href="/team">Nosotros</a>
                 </li>
-                  {% if user.is_superuser %}
+                {% if user.is_superuser %}
                   <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul class="navbar-nav">
                       <li class="nav-item dropdown">
@@ -60,33 +67,54 @@
                   {% endif %}
               </ul>
               {% else %}
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="/login">Ingresar</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/signup">Registrarse</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/team">Nosotros</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/results">Estadísticas</a>
-              </li>
-            </ul>
-            {% endif %}
-          </div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Ingresar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/team">Nosotros</a>
+                    </li>
+                </ul>
+                {% endif %}
+              </div>
+            </div>
+          </nav>
+          {% block body %} {% endblock %}
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
+          {% block js %}{% endblock %}
+
+
+    <main>
+        <div class="row">
+            <section>
+                <div class="contenedor-texto">
+                <h1>Bienvenidos!</h1>
+                <p>Hola, soy TATU! Y soy tan Chaqueño como el Algodón! Te invito a que juegues conmigo a ver cuánto sabés de mi amada provincia. 
+                    En este juego, encontrarás preguntas de diferentes categorías del saber, como: Geografía, Historia, Economía, Cultura y Arte, Ciencia y Educación, Deportes y Entretenimiento.
+                    Vas a poder medir tus conocimientos y seguir aprendiendo. 
+                    Es muy fácil jugar!. Sólo tenés que ingresar, elegir una categoría del saber y comenzar a responder. Ah, pero no te olvides de registrarte si eres nuevo jugando conmigo.
+                    Dale! Desafiá tu inteligencia y acompañame en esta aventura!</p>
+                </div>
+            </section>
+
+            <aside>
+                <br>
+                <br>
+                <br>
+                <br>
+                <img class="tatu" src="/static/images/mulita_1.png" alt="mulita">
+            </aside>
         </div>
-      </nav>
-      <!--Código Django para extender y mostrar los datos de "base" en los demás HTMLs-->
-      {% block body %} {% endblock %}
+    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-      {% block js %}{% endblock %}
+    <footer>
+        <h3>Desarrollado por Grupo 8 - Comisión 2- Informatorio 2021</h3>
+    </footer>
     
-<footer>
-  <h3>Desarrollado por Grupo 8 - Comisión 2- Informatorio 2021</h3>
-</footer>
-    
+</body>
 </html>

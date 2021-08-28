@@ -1,44 +1,50 @@
 <!doctype html>
 <html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
-    <title>{{quiz.name}}</title>
-</head>
-
-{% load static%}
+{% load static %}
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{% static 'images/mulita_1.png' %}" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    
+        <title>Chaco Quiz!</title>
+    
+    </head>
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <div>
-                    <img src="{% static 'images/1.png' %}" alt="" width="60" height="60"
+                    <img src="{% static 'images/Loguito_sin_fondo.png' %}" alt="" width="60" height="60" class="responsive"
                         class="logo d-inline-block align-text-top">
-                    <span class="head1">TATU</span> <span class="head2">Quiz</span>
+                    <span class="head1">TATU</span> <span class="head2">Chaco Quiz</span>
                 </div>
             </a>
         </div>
     </nav>
-
+    <!--Código para crear los botones que nos llevan a las preguntas-->
     <div class="container">
-        <button type="button" class="start btn btn-outline-primary btn-lg start-button mt-3">Preparado? A comenzar el Juego!</button>
+        <button type="button" class="start btn-dark btn-outline-primary btn-lg start-button mt-3">Preparado? A comenzar el Juego!</button>
         <h1 class="text-danger mt-3">{{quiz.name}} <span class="badge bg-dark timer" id="hide-time">Tiempo: <span
                     id="time-left">{{quiz.time}}</span></span> </h1>
 
         <hr class="nice" style="display: none;">
         <div>
-
+            <!--Código que arma los formularios de las preguntas y sus repuestas-->
             <form id="quiz-form" class="mt-3 mb-3">
                 {% csrf_token %}
                 <div id="quiz-box"></div>
-                <button type="submit" style="display: none;" id="button1" class="btn btn-success mt-3">Aceptar</button>
-            
+                <button type="submit" style="display: none;" id="button1" class="btn btn-dark mt-3">Finalizar</button>
+                <form> <input type="button" value="Volver" onclick="history.go (-1)" id="button1" class="btn btn-dark mt-3"> </form>
+            <!--Código que muestra los resultados al finalizar de responder-->
             </form>
             <button class="badge bg-dark total" id="total" style="display: none;"></button> 
             <div id="result-box"></div> 
@@ -47,12 +53,12 @@
 
         <div class="shared-panel">
             <span>Comparte en tus Redes</span><br>
-            <a target="_blank" class="shared fb" title="Facebook" href='https://www.facebook.com/sharer/sharer.php?u=url&t=titulo'>Facebook</a>	
-            <a target="_blank" class="shared ce" id="sml" title="Email" href="mailto:?subject=Titulo&body=Texto">Correo</a>		
+            <a target="_blank" class="fb text-dark" title="Facebook" type="button_count" href='https://www.facebook.com/sharer/sharer.php?u=url&t=titulo'>FACEBOOK</a>	
+            <a target="_blank" class="shared ce text-dark" id="sml" title="Email" href="mailto:?subject=Titulo&body=Texto">CORREO</a>		
         </div>            
 
     </div>
-
+    <!--Códigos que impoprtan JQuery y Bootstrap-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -61,6 +67,7 @@
         crossorigin="anonymous"></script>
 
 </body>
+<!--Scripts que generan las interacciones de las preguntas con sus respuestas y los resultados. Conexión a las bases de datos-->
 <script>
     const url = window.location.href
     const quizBox = document.getElementById('quiz-box')
@@ -105,7 +112,7 @@
     }
 });
 
-// temporizador
+// Temporizador
 document.addEventListener('DOMContentLoaded', () => {
         const timeLeftDisplay = document.querySelector('#time-left');
         const startbtn = document.querySelector('.start-button');
@@ -228,4 +235,8 @@ quizForm.addEventListener('submit', e=>{
   
   
 </script>
+<footer>
+    <h3>Desarrollado por Grupo 8 - Comisión 2- Informatorio 2021</h3>
+</footer>
+
 </html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'images/mulita_1.png' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+
+    <title>Nosotros</title>
+
+</head>
+<body>
+    <!--<header>
+        <div class="logo">
+            <img src="{% static 'images/Loguito_sin_fondo.png' %}" alt="logotipo">
+        </div>
+    </header>-->
+
+    <main>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/"> <img src="{% static 'images/Loguito_sin_fondo.png' %}" width="60" height="60" class="img-responsive"
+                class="logo d-inline-flex align-text-center">
+                <span class="head1">TATU</span> <span class="head2">Quiz</span></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  {% if user.is_authenticated %}
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Bienvenido {{request.user}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Salir</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/index">Trivias</a>
+                      </li>
+                      {% if user.is_superuser %}
+                      <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                        <ul class="navbar-nav">
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Admin
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                              <li><a class="dropdown-item" href="/add_quiz/">Agregar Trivia</a></li>
+                              <li><a class="dropdown-item" href="/add_question/">Agregar Pregunta</a></li>
+                              <li><a class="dropdown-item" href="/results/">Resultados</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                      {% endif %}
+                  </ul>
+                  {% else %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Ingresar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/team">Nosotros</a>
+                    </li>
+                </ul>
+                {% endif %}
+              </div>
+            </div>
+          </nav>
+          {% block body %} {% endblock %}
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
+          {% block js %}{% endblock %}
+         
+
+        <h1>Nosotros</h1>
+        <div class="presentacion">
+            <p>Somos estudiantes que estamos cursando la segunda etapa del Informatorio, y para la cual tuvimos que desarrollar ésta aplicación web. 
+                Tenemos diferentes edades, somos de distintas localidades de nuestra provincia, y estamos muy contentos de haber podido participar en éste curso. 
+                Probá nuestra app y descubrí cuanto sabés de nuetra provincia.</p>
+        </div>
+        
+        <div class="row">
+            <section>
+                <div class="contenedor_principal">
+                    <div class="card_perfil">
+                        <div class="descripcion">
+                            <p>Python, Django, Base de Datos MySQL</p>
+                        </div>
+                    </div>
+                    <div class="card_perfil">
+                        <div class="card_nombre">
+                            <img class="foto" src="/static/images/tatu-recortado.png" alt="">
+                            <h2>Roxana</h2>
+                            <p>Desarrolladora de los dibujos, logos e imágenes</p>
+                        </div>
+                        <hr>
+                        <div class="descripcion">
+                            <p>Canva, HTML, CSS, Bootstrap</p>
+                        </div>
+                    </div>
+                    <div class="card_perfil">
+                        <div class="card_nombre">
+                            <img class="foto" src="/static/images/tatu-recortado.png" alt="">
+                            <h2>Juan</h2>
+                            <p>Desarrollador base de datos y RRPP</p>
+                        </div>
+                        <hr>
+                        <div class="card_nombre">
+                            <img class="foto" src="/static/images/tatu-recortado.png" alt="">
+                            <h2>Ova</h2>
+                            <p>Desarrollador de todo un poco</p>
+                        </div>
+                        <hr>
+                        <div class="descripcion">
+                            <p>Python, Django, Base de Datos MySQL</p>
+                        </div>
+                    </div>
+                    <div class="card_perfil">
+                        <div class="card_nombre">
+                            <img class="foto" src="/static/images/tatu-recortado.png" alt="">
+                            <h2>María</h2>
+                            <p>Investigación y Modelado</p>
+                        </div>
+                        <hr>
+                        <div class="descripcion">
+                            <p>Investigación del contenido de Base de Datos, y desarrollo de MER</p>
+                        </div>
+                    </div>
+                    <div class="card_perfil">
+                        <div class="card_nombre">
+                            <img class="foto" src="/static/images/tatu-recortado.png" alt="">
+                            <h2>Nicolás</h2>
+                            <p>Investigación y Maquetación</p>
+                        </div>
+                        <hr>
+                        <div class="descripcion">
+                            <p>Investigación del contenido de Base de Datos, y desarrollo de la maqueta en Figma</p>
+                        </div>
+                    </div>
+                    <div class="card_perfil">
+                        <div class="card_nombre">
+                            <img class="foto" src="/static/images/tatu-recortado.png" alt="">
+                            <h2>Martín</h2>
+                            <p>Investigación y Maquetación</p>
+                        </div>
+                        <hr>
+                        <div class="descripcion">
+                            <p>Investigación del contenido de Base de Datos, y desarrollo de la maqueta en Figma</p>
+                        </div>
+                    </div>
+                    <div class="card_perfil">
+                        <div class="card_nombre">
+                            <img class="foto" src="/static/images/tatu-recortado.png" alt="">
+                            <h2>Gabriel</h2>
+                            <p>Investigación y Modelado</p>
+                        </div>
+                        <hr>
+                        <div class="descripcion">
+                            <p>Investigación del contenido de Base de Datos, y desarrollo de MER</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+         </div>
+        
+                
+    </main>
+    <footer>
+        <h3>Desarrollado por Grupo 8 - Comisión 2- Informatorio 2021</h3>
+    </footer>
+    
+</body>
+</html>

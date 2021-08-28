@@ -5,7 +5,7 @@
 
 {% block body %}
 
-<!-- Modal -->
+<!--Código que crea las pequeñas llamadas al ingresar a jugar, dependiendo si se está o no registrado-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -30,23 +30,21 @@
 </div>
 <br><br><br>
 
-<!-- cards -->
+<!--Código que crea los contenedores de las trivias-->
 <div class="container">
-  <div class="container mx-auto mt-2">
+  <div class="container mx-auto">
     <div class="row">
 
       {% for i in quiz %}
-      <div class="col-md-4">
-        <div class="card" style="width: 21rem;">
-          <div class="card-body">
+      <div class="col-md-4 p-3">
+        <div class="card-body">
             <h5 class="card-title" style="text-align: center;">{{i.name}}</h5>
             <br>
             <p class="card-text">{{i.desc}}</p>
             <br>
             <button data-bs-target="#exampleModal" data-bs-toggle="modal" data-time="{{i.time}}"
-              data-questions="{{i.number_of_questions}}" data-name="{{i.name}}" data-id="{{i.id}}" id="btn"
-              style="justify-content: center;" class="attempt btn mr-2 modal-button"><i class="fas fa-link"></i>A Jugar!</button>
-          </div>
+              data-questions="{{i.number_of_questions}}" data-name="{{i.name}}" data-id="{{i.id}}"
+              class="attempt btn modal-button mx-auto" style="margin-top:auto;"><i class="fas fa-link"></i>A Jugar!</button>
         </div>
       </div>
       {% endfor %}
@@ -56,6 +54,7 @@
 
 {% endblock %}
 {% block js %}
+<!--Scripts que generan las interacciones entre los contenedores y las llamadas para acceder a las trivias-->
 <script>
   const modalBtns = [...document.getElementsByClassName('modal-button')]
   const modalBody = document.getElementById('modal-body')
