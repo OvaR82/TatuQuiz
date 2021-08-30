@@ -1,42 +1,65 @@
-{% extends 'base.html' %}
-{% block title %} Registro {% endblock %}
-
-{% block body %}
-  <div class="card_perfil mx-auto" style="height: 550px;">
+{% extends 'base.html' %} {% block title %} Registro {% endblock %} {% block body %}
+<div class="card_perfil mx-auto" style="height: 550px;">
 
     <div class="col-lg-12">
-        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold"
-            style="color:black;font-weight:bold;text-align:center">Detalles de Registro</div>
+        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold" style="color:black;font-weight:bold;text-align:center">Detalles de Registro</div>
         <br>
-        <form class="row g-4" method="POST" action="/signup/">{% csrf_token %}
+        <!--<form class="row g-4" method="POST" action="/signup/">{% csrf_token %}-->
+        <form class="row g-4" novalidate method="POST" action="/signup/">{% csrf_token %}
+            <input type="hidden" id="ctoken" name="ctoken" value="empty">
             <div class="col-md-12">
                 <label for="inputname" class="form-label" style="font-weight: bold;"><i>
                         Usuario</i></label>
-                <input type="text" placeholder="Nombre de Usuario" style="text-align: center;"
-                    class="form-control" id="username" name="username" required>
+                <input type="text" placeholder="Nombre de Usuario" style="text-align: center;" class="form-control" id="username" name="username" required>
             </div>
             <div class="col-md-12">
                 <label for="inputname" class="form-label" style="font-weight: bold;"><i>
                         Email</i></label>
-                <input type="email" placeholder="Ingresa tu correo electrónico" style="text-align: center;"
-                    class="form-control" id="email" name="email" required>
+                <input type="email" placeholder="Ingresa tu correo electrónico" style="text-align: center;" class="form-control" id="email" name="email" required>
             </div>
             <div class="col-md-12">
                 <label for="inputname" class="form-label" style="font-weight: bold;"><i>
                         Contraseña</i></label>
-                <input type="password" placeholder="Ingresa tu Contraseña" style="text-align: center;"
-                    class="form-control" id="password1" name="password1" required>
+                <input type="password" placeholder="Ingresa tu Contraseña" style="text-align: center;" class="form-control" id="password1" name="password1" required>
             </div>
             <div class="col-md-12">
                 <label for="inputname" class="form-label" style="font-weight: bold;"><i>
                         Confirma tu Contraseña</i></label>
-                <input type="password" placeholder="Ingresa tu Contraseña nuevamente" style="text-align: center;"
-                    class="form-control" id="password2" name="password2" required>
+                <input type="password" placeholder="Ingresa tu Contraseña nuevamente" style="text-align: center;" class="form-control" id="password2" name="password2" required>
             </div>
             <button type="submit" class="btn bg-light font-weight-bold mx-auto" style="width:100px;font-weight:bold;justify-content:center">ACEPTAR</button>
-            </form>
-            <br>
-        </div>
-  </div>
+        </form>
+        <script src="https://www.google.com/recaptcha/api.js?render=6LcXWDIcAAAAADyZxyF4D3gk4borF_RwMiA6RsMl"></script>
+        <script>
+            (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+                    var forms = document.getElementsByClassName('row g-4');
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                return;
+                            }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            grecaptcha.ready(function() {
+                                grecaptcha.execute('6LcXWDIcAAAAADyZxyF4D3gk4borF_RwMiA6RsMl', {
+                                    action: 'submit'
+                                }).then(function(token) {
+                                    form.elements.ctoken.value = token;
+                                    form.classList.add('was-validated');
+                                    form.submit();
+                                });
+                            });
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+        <br>
+    </div>
+</div>
 
-  {% endblock %}
+{% endblock %}

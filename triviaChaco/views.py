@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import QuizForm, QuestionForm
 from django.forms import inlineformset_factory
+import requests
 
 # Funciones que organizan y conectan las vizualizaciones con los htmls y el archivo urls.py 
 # Conecta a la vista que muestra las trivias solicitando todos los elementos del módulo Quiz
@@ -95,8 +96,18 @@ def Signup(request):
         email = request.POST['email']
         password = request.POST['password1']
         confirm_password = request.POST['password2']
+        ctoken = request.POST['ctoken']
         
         if password != confirm_password:
+            return redirect('/register')
+
+        if ctoken == 'empty':
+            return redirect('/register')
+
+        payload = {'secret':"", 'response':ctoken}
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=payload).json()
+
+        if r['success'] == False or len(r) <= 2 or r['score'] <= 0.1:
             return redirect('/register')
         
         user = User.objects.create_user(username, email, password)
